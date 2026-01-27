@@ -1,7 +1,7 @@
 import java.awt.*;
 
 
-public class Car implements Movable{
+public abstract class Car implements Movable{
     public int nrDoors; // Number of doors on the car
     public double enginePower; // Engine power of the car
     public double currentSpeed; // The current speed of the car
@@ -9,13 +9,9 @@ public class Car implements Movable{
     public String modelName;
     double xPos = 0;
     double yPos = 0;
-    public double getY(){
-        return this.yPos;
-    }
-    public double getX(){
-        return this.xPos;
-    }
     String direction = "NORTH";
+
+    @Override
     public void move(){
     switch (direction){
         case "NORTH":
@@ -33,6 +29,8 @@ public class Car implements Movable{
         }
 
     }
+
+    @Override
     public void turnLeft(){
     switch (direction){
         case "NORTH":
@@ -51,6 +49,7 @@ public class Car implements Movable{
     }
 
     }
+    @Override
     public void turnRight(){
         switch (direction) {
             case "NORTH":
@@ -69,13 +68,42 @@ public class Car implements Movable{
 
     }
 
+
+    abstract public double speedFactor();
+
+    public void incrementSpeed(double amount){
+        currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount,enginePower);
+    }
+
+    private void decrementSpeed(double amount){
+        currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount,0);
+    }
+
+    // TODO fix this method according to lab pm
+    public void gas(double amount){
+        if (amount <= 1 && amount >= 0){
+            incrementSpeed(amount);
+        }
+    }
+
+    // TODO fix this method according to lab pm
+    public void brake(double amount) {
+        if (amount <= 1 && amount >= 0) {
+            decrementSpeed(amount);
+        }
+    }
     public int getNrDoors(){
         return nrDoors;
     }
     public double getEnginePower(){
         return enginePower;
     }
-
+    public double getY(){
+        return this.yPos;
+    }
+    public double getX(){
+        return this.xPos;
+    }
     public double getCurrentSpeed(){
         return currentSpeed;
     }
@@ -95,4 +123,5 @@ public class Car implements Movable{
     public void stopEngine(){
         currentSpeed = 0;
     }
+
 }

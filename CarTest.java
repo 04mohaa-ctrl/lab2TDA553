@@ -28,11 +28,47 @@ public void testContstructor(){
 
     }
     @ParameterizedTest
-    @CsvSource({"EAST", "NORTH", "WEST", "SOUTH"})
-    public void testMove(){
+    @CsvSource({
+            "NORTH, LEFT, WEST",
+            "WEST, LEFT, SOUTH",
+            "SOUTH, LEFT, EAST",
+            "EAST, LEFT, NORTH",
+            "NORTH, RIGHT, EAST",
+            "EAST, RIGHT, SOUTH",
+            "SOUTH, RIGHT, WEST",
+            "WEST, RIGHT, NORTH"
+    })
+    void turnLeftRightWorks(String startDirection, String turn, String expectedDirection) {
         Car car = new Saab95();
-        car.turnLeft();
-        car.turnLeft();
-        assertEquals("NORTH",car.direction);
+        car.direction = startDirection;
+
+        if (turn.equals("LEFT")) {
+            car.turnLeft();
+        } else {
+            car.turnRight();
+        }
+        assertEquals(expectedDirection, car.direction);
     }
+    @Test
+    public void gasTest(){
+        Car car = new Saab95();
+        double speed_before = car.getCurrentSpeed();
+        car.gas(1);
+        assertTrue(car.getCurrentSpeed() >= speed_before);
+    }
+    @Test
+    public void breakTest(){
+        Car car = new Saab95();
+        car.gas(1);
+        car.gas(1);
+        double speed_before = car.getCurrentSpeed();
+        car.brake(0.5);
+        assertTrue(car.getCurrentSpeed() <= speed_before);
+    }
+
+
+
+
+
+
 }
