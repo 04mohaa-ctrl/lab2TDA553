@@ -1,15 +1,26 @@
+import javax.management.RuntimeErrorException;
 import java.awt.*;
 
 
 public abstract class Car implements Movable{
-    public int nrDoors; // Number of doors on the car
-    public double enginePower; // Engine power of the car
-    public double currentSpeed; // The current speed of the car
-    public Color color; // Color of the car
-    public String modelName;
-    double xPos = 0;
-    double yPos = 0;
-    String direction = "NORTH";
+    public Car(int nrDoors, double enginePower, double currentSpeed, Color color, String modelName, double xPos, double yPos, String direction){
+        this.nrDoors = nrDoors;
+        this.enginePower = enginePower;
+        this.currentSpeed = currentSpeed;
+        this.color = color;
+        this.modelName = modelName;
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.direction = direction;
+    }
+    private int nrDoors; // Number of doors on the car
+    private double enginePower; // Engine power of the car
+    private double currentSpeed; // The current speed of the car
+    private Color color; // Color of the car
+    private String modelName;
+    private double xPos = 0;
+    private double yPos = 0;
+    private String direction = "NORTH";
 
     @Override
     public void move(){
@@ -71,24 +82,32 @@ public abstract class Car implements Movable{
 
     abstract public double speedFactor();
 
+
     public void incrementSpeed(double amount){
         currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount,enginePower);
     }
 
-    private void decrementSpeed(double amount){
+    public void decrementSpeed(double amount){
         currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount,0);
     }
+    public String getDirection(){return this.direction;}
 
-    // TODO fix this method according to lab pm
+
+
     public void gas(double amount){
-        if (amount <= 1 && amount >= 0){
+        if(amount > 1 || amount < 0){
+            throw new IllegalArgumentException("Number must be a integer between 0 and 1");
+        }
+        else{
             incrementSpeed(amount);
         }
     }
 
-    // TODO fix this method according to lab pm
-    public void brake(double amount) {
-        if (amount <= 1 && amount >= 0) {
+    public void brake(double amount){
+        if(amount > 1 || amount < 0){
+            throw new IllegalArgumentException("Number must be a integer between 0 and 1");
+        }
+        else {
             decrementSpeed(amount);
         }
     }
@@ -111,6 +130,8 @@ public abstract class Car implements Movable{
     public Color getColor(){
         return color;
     }
+
+    public void setDirection(String D){direction = D;}
 
     public void setColor(Color clr){
         color = clr;
