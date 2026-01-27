@@ -45,7 +45,7 @@ public class Car implements Movable{
             direction = "EAST";
             break;
         case "EAST":
-            direction = "NORT";
+            direction = "NORTH";
             break;
 
     }
