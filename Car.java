@@ -127,6 +127,10 @@ public abstract class Car implements Movable{
         return currentSpeed;
     }
 
+    public void setCurrentSpeed(double currentSpeed) {
+        this.currentSpeed = currentSpeed;
+    }
+
     public Color getColor(){
         return color;
     }
