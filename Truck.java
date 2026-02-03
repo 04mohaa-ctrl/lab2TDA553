@@ -6,10 +6,31 @@ public abstract class Truck extends Car{
 
     }
     protected boolean isRampUp = false;
-
-    protected boolean moveIng(){
-         if (getCurrentSpeed() > 0 && isRampUp){
-
-         }
+    @Override
+    public void move(){
+        if (isRampUp){
+            throw new IllegalArgumentException("Cant drive with ramp up");
+        }
+        else{
+            super.move();
+        }
     }
+    @Override
+    public void startEngine() {
+        if (isRampUp) {
+            throw new IllegalArgumentException("Cant drive with ramp up");
+        } else {
+            super.startEngine();
+        }
+    }
+    @Override
+    public void incrementSpeed(double amount){
+        if (isRampUp){
+            throw new IllegalArgumentException("Can't increase speed while the flak is up");
+        }
+        else{
+            setCurrentSpeed(Math.min(getCurrentSpeed() + speedFactor() * amount, getEnginePower()));
+        }
+    }
+
 }
