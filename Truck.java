@@ -5,6 +5,7 @@ public abstract class Truck extends Car{
         super(nrDoors,enginePower,currentSpeed,color,modelName,xPos,yPos,direction);
 
     }
+
     protected boolean isRampUp = false;
     @Override
     public void move(){
@@ -14,6 +15,9 @@ public abstract class Truck extends Car{
         else{
             super.move();
         }
+    }
+    public boolean isMoving(){
+        return getCurrentSpeed() > 0;
     }
     @Override
     public void startEngine() {

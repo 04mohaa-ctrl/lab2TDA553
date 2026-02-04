@@ -20,6 +20,15 @@ public abstract class Car implements Movable{
     private String modelName;
     private double xPos = 0;
     private double yPos = 0;
+
+    public void setxPos(double xPos) {
+        this.xPos = xPos;
+    }
+
+    public void setyPos(double yPos) {
+        this.yPos = yPos;
+    }
+
     private String direction = "NORTH";
 
     @Override

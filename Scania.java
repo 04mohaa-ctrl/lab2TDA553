@@ -11,14 +11,12 @@ public class Scania extends Truck{
 
     }
     private double angle;
-
     private double getAngle() {
         return angle;
 
     }
-
     protected void incAngle(int amount){
-        if (angle+amount > 70 || angle+amount < 0) {
+        if (angle+amount > 70 || angle+amount < 0 || isMoving()) {
             throw new IllegalArgumentException("Can't reach that angle");
         }
          else{
@@ -33,7 +31,7 @@ public class Scania extends Truck{
         }
     }
     protected void decAngle(int amount){
-        if (angle-amount > 70 || angle-amount < 0) {
+        if (angle-amount > 70 || angle-amount < 0 || isMoving()) {
             throw new IllegalArgumentException("Can't reach that angle");
         }
         else{
