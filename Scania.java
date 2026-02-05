@@ -1,19 +1,15 @@
 import java.awt.*;
-
 public class Scania extends Truck{
     @Override
     public double speedFactor() {
         return 0;
     }
-
     public Scania(){
-        super(2,280,0, Color.DARK_GRAY,"Scania",0,0,"NORTH");
-
+        super(2,300,0, Color.DARK_GRAY,"Scania",0,0,"NORTH");
     }
     private double angle;
-    private double getAngle() {
+    public double getAngle() {
         return angle;
-
     }
     protected void incAngle(int amount){
         if (angle+amount > 70 || angle+amount < 0 || isMoving()) {
@@ -21,13 +17,7 @@ public class Scania extends Truck{
         }
          else{
             angle += amount;
-            if (angle == 0) {
-                isRampUp = false;
-            }
-            else {
-                isRampUp = true;
-            }
-
+            isRampUp = false;
         }
     }
     protected void decAngle(int amount){
@@ -37,12 +27,11 @@ public class Scania extends Truck{
         else{
             angle -= amount;
             if (angle == 0) {
-                isRampUp = false;
+                isRampUp = true;
             }
             else {
-                isRampUp = true;
+                isRampUp = false;
             }
         }
     }
-
 }

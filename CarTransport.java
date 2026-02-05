@@ -9,17 +9,17 @@ public class CarTransport extends Truck {
     public CarTransport() {
         super(2, 380, 0, Color.blue, "CarTransport", 0, 0, "NORTH");
     }
+    public static final int Max_cars = 5;
     ArrayList<Car> carList = new ArrayList<>(5);
-    private void raiseRamp() {
-        if (getCurrentSpeed() != 0) {
+    public void raiseRamp() {
+        if (isMoving()) {
             throw new IllegalArgumentException("The transport is moving");
         } else {
             isRampUp = true;
         }
     }
-
-    private void lowerRamp() {
-        if (getCurrentSpeed() != 0) {
+    public void lowerRamp() {
+        if (isMoving()) {
             throw new IllegalArgumentException("The transport is moving");
         } else {
             isRampUp = false;
@@ -36,40 +36,45 @@ public class CarTransport extends Truck {
     }
     @Override
     public void turnLeft() {
-        super.move();
+        super.turnLeft();
         for (Car car : carList) {
             car.setDirection(getDirection());
         }
     }
     @Override
     public void turnRight() {
-    super.move();
+    super.turnRight();
         for(Car car :carList) {
         car.setDirection(getDirection());
         }
     }
-    private void load(Car cars){
+    public void load(Car cars){
         double X = abs(getX()- cars.getX());
         double Y = abs(getY()- cars.getY());
-        if(X <= 2 && Y <= 2 && X >= 1 && Y >= 1 && !isRampUp && carList.toArray().length < 5 || cars instanceof CarTransport || cars.getEnginePower()> 500){
-            carList.add(cars);
+        if(X <= 2 && Y <= 2 && !isRampUp && carList.size() < Max_cars) {
+            if(!(cars instanceof CarTransport) || cars.getEnginePower() < 500) {
+                carList.add(cars);
+                cars.stopEngine();
+                cars.setDirection(getDirection());
+                cars.setxPos(getX());
+                cars.setyPos(getY());
+            }
+            else{
+                throw new IllegalArgumentException("Can't load");
+            }
         }
-        cars.stopEngine();
-        cars.setDirection(getDirection());
-        cars.setxPos(getX());
-        cars.setyPos(getY());
-    }
-    private void unLoad(Car cars) {
-        if (!isRampUp && carList.get(-1) == cars) {
-            carList.remove(-1);
-            cars.stopEngine();
-            cars.setDirection(getDirection());
-            cars.setxPos(getX() + 1);
-            cars.setyPos(getY() + 1);
+        else{
+            throw new IllegalArgumentException("Can't load");
         }
-
     }
-
-
-
+    public void unLoad() {
+        int index = carList.size() -1;
+        if (!isRampUp && carList.size() > 0) {
+            carList.remove(index);
+        }
+        else{
+            throw new IllegalArgumentException("Can't unlodad");
+        }
+    }
 }
+
