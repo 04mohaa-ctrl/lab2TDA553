@@ -15,9 +15,13 @@ public class Scania extends Truck{
         if (angle+amount > 70 || angle+amount < 0 || isMoving()) {
             throw new IllegalArgumentException("Can't reach that angle");
         }
-         else{
+         else {
             angle += amount;
-            isRampUp = false;
+            if (angle == 0) {
+                isRampUp = true;
+            } else {
+                isRampUp = false;
+            }
         }
     }
     protected void decAngle(int amount){

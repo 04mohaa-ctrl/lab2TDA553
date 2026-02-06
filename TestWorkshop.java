@@ -14,6 +14,11 @@ public class TestWorkshop {
         Volvo240 volvo = new Volvo240();
         saab.LoadCars(volvo);
         saab.removeCar();
-
+    }
+    @Test
+    public void failTest(){
+        WorkShop<Truck> truck = new WorkShop<>();
+        Volvo240 volvo = new Volvo240();
+        Scania scania = new Scania();
     }
 }
